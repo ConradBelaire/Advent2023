@@ -1,5 +1,3 @@
-import re
-
 f = open("d1p1_input.txt", "r")
 
 numDict = {'0' : 0,
