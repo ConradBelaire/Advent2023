@@ -37,11 +37,12 @@ print(seed_pairs)
 
 def travel(front, back, dict_depth=0):
     if dict_depth == len(conversions):
+        #print("finished:", front)
         return [front]
     conv = conversions[dict_depth]
     for k in conv.keys():
         if k[0] <= front <= back <= k[1]:
-            # print("within bounds:", front, back, k)
+            #print("within bounds:", front, back, k, conv[k]-k[0])
             front = conv[k] + front - k[0]
             back = conv[k] + back - k[0]
             return travel(front, back, dict_depth + 1)
@@ -49,23 +50,24 @@ def travel(front, back, dict_depth=0):
             middle = k[1]
             # if conv[k] + front - k[0] == 0:
                 # ("Front Zero!", front, back, k, conv[k] + front - k[0], dict_depth)
-            # print("front intersect:", front, back, k)
+            #print("front intersect:", front, back, k, conv[k]-k[0])
             return (travel(conv[k] + front - k[0], conv[k] + middle - k[0], dict_depth + 1)
                     + travel(middle, back, dict_depth))
-        if front < k[0] <= back < k[1]:
-            # print("back intersect:", front, back, k)
-            middle = k[1]
-            if conv[k] + middle - k[0] == 0:
-                print("Back Zero!", front, back, k, conv[k] + middle - k[0], dict_depth)
+        if front <= k[0] < back < k[1]:
+            #print("back intersect:", front, back, k, conv[k]-k[0])
+            middle = k[0]
+            # if conv[k] + middle - k[0] == 0:
+                # print("Back Zero!", front, back, k, conv[k] + middle - k[0], dict_depth)
             return (travel(front, middle, dict_depth)
                     + travel(conv[k] + middle - k[0], conv[k] + back - k[0], dict_depth + 1))
 
-    # print("no bounds:", front, back, conv.keys())
+    #print("no bounds:", front, back, conv.keys())
     return travel(front, back, dict_depth + 1)
 
 
 results = []
 for pair in seed_pairs:
+    #print("new seed")
     results += travel(pair[0], pair[1])
 print(results)
 print(min(results))
