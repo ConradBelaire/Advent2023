@@ -32,7 +32,7 @@ seeds = list(map(int, re.findall(num_pattern, chunks[0][0])))
 for seed in seeds:
     for d in conversions:
         for k in d.keys():
-            if seed >= k[0] and seed < k[1]:
+            if k[0] <= seed < k[1]:
                 # print(seed, k[0], k[1], d[k] + seed - k[0])
                 seed = d[k] + seed - k[0]
                 break
