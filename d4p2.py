@@ -16,7 +16,7 @@ for i in range(len(lines)):
         if num in winners:
             score += 1
     for j in range(score):
-        if i + j + 1 > len(lines) : break
+        if i + j + 1 > len(lines): break
         copies[i+j+1] += copies[i]
     result += copies[i]
     print(winners, nums, score)
