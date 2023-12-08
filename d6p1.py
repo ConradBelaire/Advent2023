@@ -6,8 +6,8 @@ f = open("d6_input.txt", "r")
 lines = f.readlines()
 num_pattern = r"(?!=\d)(\d+)(?!\d)"
 
-times = list(map(int, re.findall(num_pattern, lines[0])))
-distances = list(map(int, re.findall(num_pattern, lines[1])))
+times = list(map(int, re.findall(num_pattern, lines[0].replace(" ", ""))))
+distances = list(map(int, re.findall(num_pattern, lines[1].replace(" ", ""))))
 result = 1
 
 for i in range(len(times)):
