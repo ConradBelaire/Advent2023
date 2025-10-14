@@ -1,5 +1,5 @@
 import numpy as np
-f = open("d13_input.txt", "r")
+f = open("d13_inpute.txt", "r")
 
 eof = False
 total = 0
@@ -14,7 +14,7 @@ while not eof:
             eof = True
             break
         field.append(line.strip())
-    #print(field)
+    print(field)
     result = 0
     for i in range(1, len(field)):
         if field[i] == field[i-1]:
