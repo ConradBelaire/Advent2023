@@ -14,6 +14,7 @@ energized = [[0] * len(lines[0]) for _ in range(len(lines))]
 
 # move(row, col) is the new position. It checks if there's a problem at the start of the func, and immediately returns if so
 
+moveQueue = [] # (row, col, dir)
 
 def move(row, col, dir):
     if (col) < 0 or (col) >= len(lines[0]) or (row) < 0 or (row) >= len(lines): # If going out of the map
@@ -25,63 +26,66 @@ def move(row, col, dir):
     c = lines[row][col]
     if dir == 8: # up
         if c == '.' or c == '|':
-            move(row - 1, col, 8) # up
+            moveQueue.append((row - 1, col, 8)) # up
             return
         if c == '-':
-            move(row, col - 1, 2) # left
-            move(row, col + 1, 1) # right
+            moveQueue.append((row, col - 1, 2)) # left
+            moveQueue.append((row, col + 1, 1)) # right
             return
         if c == '/':
-            move(row, col + 1, 1) # right
+            moveQueue.append((row, col + 1, 1)) # right
             return
         if c == '\\':
-            move(row, col - 1, 2) # left
+            moveQueue.append((row, col - 1, 2)) # left
             return
     if dir == 4: # down
         if c == '.' or c == '|':
-            move(row + 1, col, 4) # down
+            moveQueue.append((row + 1, col, 4)) # down
             return
         if c == '-':
-            move(row, col - 1, 2) # left
-            move(row, col + 1, 1) # right
+            moveQueue.append((row, col - 1, 2)) # left
+            moveQueue.append((row, col + 1, 1)) # right
             return
         if c == '/':
-            move(row, col - 1, 2) # left
+            moveQueue.append((row, col - 1, 2)) # left
             return
         if c == '\\':
-            move(row, col + 1, 1) # right
+            moveQueue.append((row, col + 1, 1)) # right
             return
     if dir == 2: # left
         if c == '.' or c == '-':
-            move(row, col - 1, 2) # left
+            moveQueue.append((row, col - 1, 2)) # left
             return
         if c == '|':
-            move(row - 1, col, 8) # up
-            move(row + 1, col, 4) # down
+            moveQueue.append((row - 1, col, 8)) # up
+            moveQueue.append((row + 1, col, 4)) # down
             return
         if c == '/':
-            move(row + 1, col, 4) # down
+            moveQueue.append((row + 1, col, 4)) # down
             return
         if c == '\\':
-            move(row - 1, col, 8) # up
+            moveQueue.append((row - 1, col, 8)) # up
             return
     if dir == 1: # right
         if c == '.' or c == '-':
-            move(row, col + 1, 1) # right
+            moveQueue.append((row, col + 1, 1)) # right
             return
         if c == '|':
-            move(row - 1, col, 8) # up
-            move(row + 1, col, 4) # down
+            moveQueue.append((row - 1, col, 8)) # up
+            moveQueue.append((row + 1, col, 4)) # down
             return
         if c == '/':
-            move(row - 1, col, 8) # up
+            moveQueue.append((row - 1, col, 8)) # up
             return
         if c == '\\':
-            move(row + 1, col, 4) # down
+            moveQueue.append((row + 1, col, 4)) # down
             return
 
 # Start at top left corner, going right
 move(0, 0, 1)
+while len(moveQueue) > 0:
+    pos = moveQueue.pop(0)
+    move(pos[0], pos[1], pos[2])
 
 def printField(input):
     for row in input:
